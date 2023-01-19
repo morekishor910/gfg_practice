@@ -7,33 +7,33 @@ class Solution
     static Stack<Character> stack = new Stack<>();
     static boolean ispar(String x)
     {
-        for(int i=0;i<x.length();i++){
-            if(x.charAt(i)=='(' || x.charAt(i)=='[' || x.charAt(i)=='{'){
-                stack.push(x.charAt(i));
+        Stack<Character> stack = new Stack<Character>();
+        
+        for (int i = 0; i < x.length(); i++)
+        {
+            char ch = x.charAt(i);
+            if (ch == '(' || ch == '[' || ch == '{')
+            {
+                stack.push(ch);
             }
-            else{
-                
-                if(isMatching(x.charAt(i))==true){
-                    stack.pop();
-                }
-                
-                else{
+            else
+            {
+                if (stack.isEmpty())
                     return false;
-                }
+                char sym = stack.peek();
+                if (ch == ')' && sym == '(')
+                    stack.pop();
+                else if (ch == ']' && sym == '[')
+                    stack.pop();
+                else if (ch == '}' && sym == '{')
+                    stack.pop();
+                else 
+                    return false;
             }
         }
         
-        return true;
+        return (stack.isEmpty())? true : false;
         
     }
     
-    static boolean isMatching(char ch){
-            if(!stack.isEmpty()){
-                if( (stack.peek()=='(' && ch == ')') || (stack.peek()=='[' && ch == ']') || (stack.peek()=='{' && ch == '}' )){
-                    return true;
-                }
-                return false;
-            }
-            return false;
-    }
 }
